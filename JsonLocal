@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                debugger
+                $("#btnSubmit").click(function () {
+                    debugger
+                    var data = {};
+                    var Tabl = {};
+                    Tabl = JSON.parse(localStorage.getItem("TableData")) || [];
+                    data.Id = Tabl.length==null?0:Tabl.length+1;
+                    data.Name = $('#txtName').val();
+                    data.Address = $('#txtAddress').val();
+                    data.Age = $('#drpSelect1').val();
+                    Tabl = JSON.parse(localStorage.getItem("TableData"))||[];
+                        Tabl.push(data);
+                        localStorage.setItem("TableData", JSON.stringify(Tabl));
+                        location.reload();
+                });
+                GetDataa()
+               
+            });
+            function GetDataa()
+            {
+                document.getElementById('tabData').innerHTML = '';
+                var data1 = JSON.parse(localStorage.getItem("TableData"));
+                if (data1 != null) {
+                    var p = '<table><thead><tr><th>Id</th><th>Name</th><th>Address</th><th>Age</th><th>Delete</th></tr></thead><tbody>';
+                    for (var i in data1) {
+                        if (data1[i] != null)
+                            p += '<tr><td>' + data1[i].Id + '</td><td>' + data1[i].Name + '</td><td>' + data1[i].Address + '</td><td>' + data1[i].Age + '</td><td><a href="#" onclick="DeleteItem(' + data1[i].Id + ')">Delete</a></td></tr>';
+                    }
+                    p += '</tbody></table>'
+                    if (p != null)
+                        document.getElementById('tabData').innerHTML = p;
+                }
+            }
+            function DeleteItem(id)
+            {
+                var data1 = JSON.parse(localStorage.getItem("TableData"));
+                debugger
+                for (var i in data1) {
+                    var object = data1[i];
+                    if (object != null) {
+                        if (object.Id == id) {
+                            delete data1[i];
+                            localStorage.setItem("TableData", JSON.stringify(data1));
+                            break;
+                        }
+                    }
+
+                }
+                GetDataa();
+            }
+    </script>
+</head>
+<body>
+    <label>Name</label>
+    <input id="txtName" type="text" />
+    <br />
+    <label>Address</label>
+    <input id="txtAddress" type="text" />
+    <br />
+    <label>Age</label>
+<select id="drpSelect1" name="Age">
+    <option>15</option>
+    <option>25</option>
+    <option>30</option>
+    <option>35</option>
+</select>
+    <br />
+    <button id="btnSubmit" value="Save" type="submit">Save</button>
+    <br /><br /><br />
+    <div id="tabData">
+    </div>
+</body>
+</html>
