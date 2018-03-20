@@ -29,9 +29,12 @@
                 var data1 = JSON.parse(localStorage.getItem("TableData"));
                 if (data1 != null) {
                     var p = '<table><thead><tr><th>Id</th><th>Name</th><th>Address</th><th>Age</th><th>Delete</th></tr></thead><tbody>';
+                    var j = 0;
                     for (var i in data1) {
-                        if (data1[i] != null)
-                            p += '<tr><td>' + data1[i].Id + '</td><td>' + data1[i].Name + '</td><td>' + data1[i].Address + '</td><td>' + data1[i].Age + '</td><td><a href="#" onclick="DeleteItem(' + data1[i].Id + ')">Delete</a></td></tr>';
+                        if (data1[i] != null) {
+                            p += '<tr><td>' + (parseInt(j) + 1) + '</td><td>' + data1[i].Name + '</td><td>' + data1[i].Address + '</td><td>' + data1[i].Age + '</td><td><a href="#" onclick="DeleteItem(' + data1[i].Id + ')">Delete</a></td></tr>';
+                            j++
+                        }
                     }
                     p += '</tbody></table>'
                     if (p != null)
